@@ -1,0 +1,14 @@
+platforms:
+  - name: Robinhood
+    enabled: true
+    api: robinhood
+    fields: [username, password]
+  - name: Schwab
+    enabled: true
+    api: schwab
+    fields: [api_key]
+dashboard:
+  sections:
+    - type: summary
+    - type: holdings
+    - type: performance
