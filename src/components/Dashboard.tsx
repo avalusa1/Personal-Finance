@@ -2,10 +2,11 @@ import React from "react";
 import { useConfig } from "@/context/ConfigProvider";
 import PlatformConnector from "./PlatformConnector";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart2, TrendingUp, Layers } from "lucide-react";
+import { BarChart2, TrendingUp, Layers, User } from "lucide-react";
+import { useZerodha } from "@/context/ZerodhaContext";
 
 const SectionSummary = () => (
-  <Card className="mb-4">
+  <Card className="mb-4 animate-fade-in">
     <CardHeader>
       <CardTitle>
         <div className="flex items-center gap-2">
@@ -34,7 +35,7 @@ const SectionSummary = () => (
 );
 
 const SectionHoldings = () => (
-  <Card className="mb-4">
+  <Card className="mb-4 animate-fade-in">
     <CardHeader>
       <CardTitle>
         <div className="flex items-center gap-2">
@@ -85,7 +86,7 @@ const SectionHoldings = () => (
 );
 
 const SectionPerformance = () => (
-  <Card className="mb-4">
+  <Card className="mb-4 animate-fade-in">
     <CardHeader>
       <CardTitle>
         <div className="flex items-center gap-2">
@@ -111,6 +112,7 @@ const sectionMap: Record<string, React.FC> = {
 
 const Dashboard = () => {
   const { config, loading, error } = useConfig();
+  const { connected, user } = useZerodha();
 
   if (loading) return <div>Loading dashboard...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
@@ -129,6 +131,14 @@ const Dashboard = () => {
           )}
         </div>
       </div>
+      {connected && user && (
+        <div className="flex items-center gap-2 mb-6 p-3 rounded bg-blue-50 border border-blue-200 animate-fade-in">
+          <User className="w-5 h-5 text-blue-500" />
+          <span className="font-medium text-blue-700">
+            Welcome, {user.name} ({user.email})
+          </span>
+        </div>
+      )}
       {config.dashboard?.sections?.map((section: any, idx: number) => {
         const SectionComponent = sectionMap[section.type];
         return SectionComponent ? (
