@@ -1,12 +1,12 @@
 platforms:
-  - name: Robinhood
+  - name: Zerodha
     enabled: true
+    api: zerodha
+    fields: []
+  - name: Robinhood
+    enabled: false
     api: robinhood
     fields: [username, password]
-  - name: Schwab
-    enabled: true
-    api: schwab
-    fields: [api_key]
 dashboard:
   sections:
     - type: summary
